@@ -6,7 +6,6 @@ import ProductScreen from './pages/ProductScreen';
 function App() {
   /**
    * Is the container of every page
-   *
    */
   return (
     <BrowserRouter>
