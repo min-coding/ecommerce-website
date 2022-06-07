@@ -2,6 +2,10 @@ body {
   background-color: cadetblue;
 }
 
+main {
+  flex: 1;
+}
+
 .featured-product-list {
   display: flex;
   flex-wrap: wrap;
@@ -13,14 +17,15 @@ body {
 }
 
 .product-image {
-  width: 380px;
-  height: 430px;
+  width: 100%;
+  height: 400px;
+  object-fit: scale-down;
 }
 
 .site-container {
   min-height: 100vh;
 }
 
-main {
-  flex: 1;
+.rating span {
+  color: #ffc000;
 }

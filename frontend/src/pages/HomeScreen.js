@@ -1,7 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 import logger from 'use-reducer-logger';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Product from '../components/Product';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -58,28 +60,17 @@ export default function HomeScreen() {
       ) : error ? (
         <div> {error}</div>
       ) : (
-        <div className="featured-product-list">
-          {products.map((product) => {
-            return (
-              <div key={product.slug} className="product-container">
-                <Link to={`/products/${product.slug}`}>
-                  <img
-                    className="product-image"
-                    src={product.image}
-                    alt={product.name}
-                  />
-                </Link>
-
-                <h3>
-                  <Link to={`/products/${product.slug}`}>
-                    <strong>{product.name}</strong>
-                  </Link>
-                </h3>
-                <h4>${product.price}</h4>
-              </div>
-            );
-          })}
-        </div>
+        <Row>
+          <div className="featured-product-list">
+            {products.map((product) => {
+              return (
+                <Col key={product.slug} sm={6} md={4} lg={3} className="mb-3">
+                  <Product product={product}></Product>
+                </Col>
+              );
+            })}
+          </div>
+        </Row>
       )}
     </>
   );
