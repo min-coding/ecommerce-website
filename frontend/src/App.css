@@ -1,3 +1,7 @@
+body {
+  background-color: cadetblue;
+}
+
 .featured-product-list {
   display: flex;
   flex-wrap: wrap;
@@ -11,4 +15,12 @@
 .product-image {
   width: 380px;
   height: 430px;
+}
+
+.site-container {
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
 }
