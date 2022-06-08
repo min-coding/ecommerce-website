@@ -12,6 +12,7 @@ import { Helmet } from 'react-helmet-async';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import { getError } from '../utils';
+import { Store } from '../Store';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -53,18 +54,36 @@ export default function ProductScreen() {
         const response = await axios.get(`/api/products/slug/${slug}`);
         dispatch({ type: 'FETCH_SUCCESS', payload: response.data });
       } catch (err) {
-        dispatch({ type: 'FETCH_FAIL', payload: getError(err)});
+        dispatch({ type: 'FETCH_FAIL', payload: getError(err) });
       }
     }
     fetchData();
   }, [slug]);
 
+  const { state, dispatch: ctxDispatch } = React.useContext(Store);
+  const { cart } = state;
+
+  async function addtoCartHandler() {
+    const existItem = cart.cartItems.find((x) => x._id === product._id);
+    const quantity = existItem ? existItem.quantity + 1 : 1;
+
+    const { data } = await axios.get(`/api/products/${product._id}`);
+    if (data.countInStock < quantity) {
+      window.alert('Sorry. This product is out of stock');
+      return;
+    }
+
+    ctxDispatch({
+      type: 'CART_ADD_ITEM',
+      payload: { ...product, quantity: quantity },
+    });
+  }
+
   return loading ? (
-    <LoadingBox/>
+    <LoadingBox />
   ) : error ? (
-    <MessageBox variant='danger'>{error}</MessageBox>
-    ) :
-      (
+    <MessageBox variant="danger">{error}</MessageBox>
+  ) : (
     <div>
       <Row>
         <Col md={6}>
@@ -120,7 +139,9 @@ export default function ProductScreen() {
                 {product.countInStock > 0 && (
                   <ListGroup.Item>
                     <div className="d-grid">
-                      <Button variant="primary">Add to Cart</Button>
+                      <Button onClick={addtoCartHandler} variant="primary">
+                        Add to Cart
+                      </Button>
                     </div>
                   </ListGroup.Item>
                 )}
