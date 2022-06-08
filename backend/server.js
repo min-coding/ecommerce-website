@@ -8,6 +8,10 @@ app.get('/api/products', (req, res) => {
 });
 
 app.get('/api/products/slug/:slug', (req, res) => {
+  /**
+   *  checking if there's any slug in the database matches the slug requested from
+      client side
+   */
   const product = data.products.find((x) => x.slug === req.params.slug);
   if (product) {
     res.send(product);
