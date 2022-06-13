@@ -1,4 +1,18 @@
 const data = {
+  users: [
+    {
+      name: 'Lisa',
+      email: 'admin@example.com',
+      password: 12345,
+      isAdmin: true,
+    },
+    {
+      name: 'John',
+      email: 'user@example.com',
+      password: 67890,
+      isAdmin: false,
+    },
+  ],
   products: [
     {
       // _id: '1',
