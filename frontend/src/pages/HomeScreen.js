@@ -1,6 +1,5 @@
 import React from 'react';
 import axios from 'axios';
-import logger from 'use-reducer-logger';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Product from '../components/Product';
@@ -33,14 +32,11 @@ const reducer = (state, action) => {
 };
 
 export default function HomeScreen() {
-  const [{ loading, error, products }, dispatch] = React.useReducer(
-    logger(reducer),
-    {
-      products: [],
-      loading: true,
-      error: '',
-    }
-  );
+  const [{ loading, error, products }, dispatch] = React.useReducer({
+    products: [],
+    loading: true,
+    error: '',
+  });
 
   React.useEffect(() => {
     async function fetchData() {
@@ -59,9 +55,9 @@ export default function HomeScreen() {
     <>
       <h2> Featured product</h2>
       {loading ? (
-        <LoadingBox/>
+        <LoadingBox />
       ) : error ? (
-          <MessageBox variant='danger'>{error}</MessageBox>
+        <MessageBox variant="danger">{error}</MessageBox>
       ) : (
         <Row>
           <div className="featured-product-list">
