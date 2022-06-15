@@ -5,7 +5,6 @@ import Col from 'react-bootstrap/Col';
 import Product from '../components/Product';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
-import { Helmet } from 'react-helmet-async';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -32,7 +31,7 @@ const reducer = (state, action) => {
 };
 
 export default function HomeScreen() {
-  const [{ loading, error, products }, dispatch] = React.useReducer({
+  const [{ loading, error, products }, dispatch] = React.useReducer(reducer,{
     products: [],
     loading: true,
     error: '',
