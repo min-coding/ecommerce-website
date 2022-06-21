@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
+import Axios from 'axios';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Badge from 'react-bootstrap/Badge';
@@ -39,7 +39,8 @@ const reducer = (state, action) => {
 };
 
 export default function ProductScreen() {
-  const { slug } = useParams();
+  const params = useParams();
+  const { slug } = params;
 
   const [{ loading, error, product }, dispatch] = React.useReducer(reducer, {
     product: [],
@@ -51,8 +52,9 @@ export default function ProductScreen() {
     async function fetchData() {
       dispatch({ type: 'FETCH_REQUEST' });
       try {
-        const response = await axios.get(`/api/products/slug/${slug}`);
+        const response = await Axios.get(`/api/products/slug/${slug}`);
         dispatch({ type: 'FETCH_SUCCESS', payload: response.data });
+        // pass the data from API to local state with function reducer
       } catch (err) {
         dispatch({ type: 'FETCH_FAIL', payload: getError(err) });
       }
@@ -67,7 +69,7 @@ export default function ProductScreen() {
     const existItem = cart.cartItems.find((x) => x._id === product._id);
     const quantity = existItem ? existItem.quantity + 1 : 1;
 
-    const { data } = await axios.get(`/api/products/${product._id}`);
+    const { data } = await Axios.get(`/api/products/${product._id}`);
     if (data.countInStock < quantity) {
       window.alert('Sorry. This product is out of stock');
       return;

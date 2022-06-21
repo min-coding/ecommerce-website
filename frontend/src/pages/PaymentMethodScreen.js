@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
@@ -8,16 +8,16 @@ import { Store } from '../Store';
 
 export default function PaymentMethodScreen() {
   const navigate = useNavigate();
-  const { state, dispatch: ctxDispatch } = useContext(Store);
+  const { state, dispatch: ctxDispatch } = React.useContext(Store);
   const {
     cart: { shippingAddress, paymentMethod },
   } = state;
 
-  const [paymentMethodName, setPaymentMethod] = useState(
+  const [paymentMethodName, setPaymentMethodName] = React.useState(
     paymentMethod || 'PayPal'
   );
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (!shippingAddress.address) {
       navigate('/shipping');
     }
@@ -44,7 +44,7 @@ export default function PaymentMethodScreen() {
               label="PayPal"
               value="PayPal"
               checked={paymentMethodName === 'PayPal'}
-              onChange={(e) => setPaymentMethod(e.target.value)}
+              onChange={(e) => setPaymentMethodName(e.target.value)}
             />
           </div>
           <div className="mb-3">
@@ -54,7 +54,7 @@ export default function PaymentMethodScreen() {
               label="Stripe"
               value="Stripe"
               checked={paymentMethodName === 'Stripe'}
-              onChange={(e) => setPaymentMethod(e.target.value)}
+              onChange={(e) => setPaymentMethodName(e.target.value)}
             />
           </div>
           <div className="mb-3">

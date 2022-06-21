@@ -8,9 +8,32 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { Store } from '../Store';
+import { toast } from 'react-toastify';
+import { getError } from '../utils';
+import Axios from 'axios';
+import LoadingBox from '../components/LoadingBox';
 
 export default function PlaceOrderScreen() {
   const navigate = useNavigate();
+
+  // Why create reducer here?
+  const reducer = (state, action) => {
+    switch (action.type) {
+      case 'CREATE_REQUEST':
+        return { ...state, loading: true };
+      case 'CREATE_SUCCESS':
+        return { ...state, loading: false };
+      case 'CREATE_FAIL':
+        return { ...state, loading: false };
+      default:
+        return state;
+    }
+  };
+
+  const [{ loading }, dispatch] = React.useReducer(reducer, {
+    loading: false,
+  });
+
   const { state, dispatch: ctxDispatch } = React.useContext(Store);
   const { userInfo, cart } = state;
 
@@ -18,7 +41,36 @@ export default function PlaceOrderScreen() {
     return Math.round(num * 100 + Number.EPSILON) / 100;
   }
 
-  async function placeOrderHandler() {}
+  async function placeOrderHandler() {
+    try {
+      dispatch({ type: 'CREATE_REQUEST' });
+      const { data } = await Axios.post(
+        '/api/orders',
+        {
+          orderItems: cart.cartItems,
+          shippingAddress: cart.shippingAddress,
+          paymentMethod: cart.paymentMethod,
+          itemsPrice: cart.itemsPrice,
+          shippingPrice: cart.shippingPrice,
+          taxPrice: cart.taxPrice,
+          totalPrice: cart.totalPrice,
+        },
+        {
+          headers: {
+            // To check if the order is from authenticated user or not
+            authorization: `Bearer ${userInfo.token}`,
+          },
+        }
+      );
+      ctxDispatch({ type: 'CART_CLEAR' });
+      dispatch({ type: 'CREATE_SUCCESS' });
+      localStorage.removeItem('cartItems');
+      navigate(`/order/${data.order._id}`);
+    } catch (error) {
+      dispatch({ type: 'CREATE_FAIL' });
+      toast.error(getError(error));
+    }
+  }
 
   cart.itemsPrice = round2(
     cart.cartItems.reduce((a, c) => a + c.quantity * c.price, 0)
@@ -140,6 +192,7 @@ export default function PlaceOrderScreen() {
                       Place order
                     </Button>
                   </div>
+                  {loading && <LoadingBox></LoadingBox>}
                 </ListGroup.Item>
               </ListGroup>
             </Card.Body>

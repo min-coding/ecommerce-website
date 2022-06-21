@@ -18,6 +18,7 @@ import ShippingAddressScreen from './pages/ShippingAddressScreen';
 import SignUpScreen from './pages/SignUpScreen';
 import PaymentMethodScreen from './pages/PaymentMethodScreen';
 import PlaceOrderScreen from './pages/PlaceOrderScreen';
+import OrderScreen from './pages/OrderScreen';
 
 function App() {
   const { state, dispatch: ctxDispatch } = React.useContext(Store);
@@ -77,7 +78,7 @@ function App() {
         <main>
           <Container className="mt-3">
             <Routes>
-              <Route path="/" element={<HomeScreen />} />
+              <Route exact path="/" element={<HomeScreen />} />
               <Route path="/signin" element={<SignInScreen />} />
               <Route path="/signup" element={<SignUpScreen />} />
               <Route path="/shipping" element={<ShippingAddressScreen />} />
@@ -85,6 +86,7 @@ function App() {
               <Route path="/placeorder" element={<PlaceOrderScreen />} />
               <Route path="/cart" element={<CartScreen />} />
               <Route path="/products/:slug" element={<ProductScreen />} />
+              <Route path="/order/:id" element={<OrderScreen />} />
             </Routes>
           </Container>
         </main>

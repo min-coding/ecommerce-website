@@ -14,7 +14,7 @@ const initialState = {
       ? JSON.parse(localStorage.getItem('shippingAddress'))
       : {},
     paymentMethod: localStorage.getItem('paymentMethod')
-      ? JSON.parse(localStorage.getItem('paymentMethod'))
+      ? JSON.parse(JSON.stringify(localStorage.getItem('paymentMethod')))
       : '',
   },
 };
@@ -42,6 +42,8 @@ function reducer(state, action) {
       localStorage.setItem('cartItems', JSON.stringify(cartItems));
       return { ...state, cart: { ...state.cart, cartItems } };
     }
+    case 'CART_CLEAR':
+      return { ...state, cart: { ...state.cart, cartItems: [] } };
     case 'USER_SIGNIN':
       return { ...state, userInfo: action.payload };
     case 'USER_SIGNOUT':
@@ -79,6 +81,7 @@ function StoreProvider(props) {
   const [state, dispatch] = React.useReducer(reducer, initialState);
   // useReducer returns state and dispatch
   const value = { state, dispatch };
+  // pass the value object as prop to the Store's Provider , so that we can access it using useContext.
   return <Store.Provider value={value}>{props.children}</Store.Provider>;
 }
 
