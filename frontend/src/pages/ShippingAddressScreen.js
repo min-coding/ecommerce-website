@@ -26,7 +26,6 @@ export default function ShippingAddressScreen() {
   React.useEffect(() => {
     // If not signed in and go to shipping page --> redirect to sign in page
     if (!userInfo) {
-      //
       navigate('/signin?redirect=/shipping');
     }
   }, [userInfo, navigate]);

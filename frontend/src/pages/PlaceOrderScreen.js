@@ -16,7 +16,6 @@ import LoadingBox from '../components/LoadingBox';
 export default function PlaceOrderScreen() {
   const navigate = useNavigate();
 
-  // Why create reducer here?
   const reducer = (state, action) => {
     switch (action.type) {
       case 'CREATE_REQUEST':
