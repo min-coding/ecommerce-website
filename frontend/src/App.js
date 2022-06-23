@@ -20,6 +20,7 @@ import PaymentMethodScreen from './pages/PaymentMethodScreen';
 import PlaceOrderScreen from './pages/PlaceOrderScreen';
 import OrderScreen from './pages/OrderScreen';
 import OrderHistory from './pages/OrderHistory';
+import ProfileScreen from './pages/ProfileScreen';
 
 function App() {
   const { state, dispatch: ctxDispatch } = React.useContext(Store);
@@ -30,6 +31,7 @@ function App() {
     localStorage.removeItem('userInfo');
     localStorage.removeItem('shippingAddress');
     localStorage.removeItem('paymentMethod');
+    window.location.href='/signin'
   }
   return (
     <BrowserRouter>
@@ -85,6 +87,7 @@ function App() {
               <Route exact path="/" element={<HomeScreen />} />
               <Route path="/signin" element={<SignInScreen />} />
               <Route path="/signup" element={<SignUpScreen />} />
+              <Route path="/profile" element={<ProfileScreen />} />
               <Route path="/shipping" element={<ShippingAddressScreen />} />
               <Route path="/payment" element={<PaymentMethodScreen />} />
               <Route path="/placeorder" element={<PlaceOrderScreen />} />
