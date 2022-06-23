@@ -4,9 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "cd backend && npm install  && cd ../frontend && npm install && npm run build",
-    "start": "node backend/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "react-scripts start",
+    "start": "serve -s build",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "heroku-postbuild": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -17,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/min-coding/ecommerce-website/issues"
   },
-  "homepage": "https://github.com/min-coding/ecommerce-website#readme"
+  "homepage": "https://github.com/min-coding/ecommerce-website#readme",
+  "dependencies": {
+    "serve": "^13.0.2"
+  }
 }
