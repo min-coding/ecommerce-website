@@ -42,7 +42,7 @@ app.use((err, req, res, next) => {
   res.status(500).send({ message: err.message });
 });
 
-const port = process.env.port || 8080;
+const port = process.env.PORT || 8080;
 app.listen(port, () => {
   console.log(`serve at http://localhost:${port}`);
 });
