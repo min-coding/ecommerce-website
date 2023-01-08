@@ -6,11 +6,5 @@
       "use": "@vercel/node",
       "outputDirectory": "build"
     }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "server.js"
-    }
   ]
 }
