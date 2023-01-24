@@ -74,12 +74,14 @@ function App() {
                 <i className="fas fa-bars"></i>
               </Button>
               <LinkContainer to="/">
-                <Navbar.Brand> Minnisota</Navbar.Brand>
+                <Navbar.Brand>
+                  My shopping site
+                </Navbar.Brand>
               </LinkContainer>
               <Navbar.Toggle aria-controls="basic-navbar-nav"></Navbar.Toggle>
               <Navbar.Collapse id="basic-navbar-nav">
-                <SearchBox></SearchBox>
-                <Nav className="me-auto w-100 justify-content-end">
+                <Nav className="w-100 justify-content-end">
+                <SearchBox className='search-bar'></SearchBox>
                   <Link to="/cart" className="nav-link">
                     Cart
                     {cart.cartItems.length > 0 && (
